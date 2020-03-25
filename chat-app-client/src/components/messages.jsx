@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Sent from "./sent";
 import Replies from "./replies";
 //import ScrollToBottom from "react-scroll-to-bottom";
+import { animateScroll } from "react-scroll";
 
 class Messages extends Component {
   displaySent = () => {
@@ -19,6 +20,17 @@ class Messages extends Component {
     return msgs;
   };
 
+  componentDidMount() {
+    this.scrollToBottom();
+  }
+  componentDidUpdate() {
+    this.scrollToBottom();
+  }
+  scrollToBottom() {
+    animateScroll.scrollToBottom({
+      containerId: "messages"
+    });
+  }
   render() {
     return (
       <div className="messages" id="messages">
