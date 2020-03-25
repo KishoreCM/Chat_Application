@@ -17,8 +17,14 @@ class MessageInput extends Component {
           <input
             type="text"
             placeholder="Type your message..."
-            value={this.state.name}
+            value={this.state.message}
             onChange={this.setMessage}
+            onKeyPress={event => {
+              if (event.key === "Enter") {
+                this.setState({ message: "" });
+                this.props.sendMessage(this.state.message);
+              }
+            }}
           />
           <i className="fa fa-paperclip attachment" aria-hidden="true"></i>
           <button
@@ -26,6 +32,7 @@ class MessageInput extends Component {
             type="submit"
             onClick={e => {
               e.preventDefault();
+              this.setState({ message: "" });
               this.props.sendMessage(this.state.message);
             }}
           >

@@ -5,9 +5,7 @@ class Replies extends Component {
     return (
       <li className="replies">
         <img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
-        <p>
-          When you're backed against the wall, break the god damn thing down.
-        </p>
+        <p>{this.props.messages}</p>
       </li>
     );
   }
