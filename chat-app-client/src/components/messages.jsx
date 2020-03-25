@@ -3,6 +3,7 @@ import Sent from "./sent";
 import Replies from "./replies";
 //import ScrollToBottom from "react-scroll-to-bottom";
 import { animateScroll } from "react-scroll";
+import ReactEmoji from "react-emoji";
 
 class Messages extends Component {
   displaySent = () => {
@@ -11,9 +12,13 @@ class Messages extends Component {
       //console.log(msg);
       if (msg.text !== "") {
         if (msg.from === this.props.userName) {
-          msgs.push(<Sent key={index} messages={msg.text} />);
+          msgs.push(
+            <Sent key={index} messages={ReactEmoji.emojify(msg.text)} />
+          );
         } else {
-          msgs.push(<Replies key={index} messages={msg.text} />);
+          msgs.push(
+            <Replies key={index} messages={ReactEmoji.emojify(msg.text)} />
+          );
         }
       }
     });
