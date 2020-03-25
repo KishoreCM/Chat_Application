@@ -4,15 +4,16 @@ import Search from "./search";
 import Contacts from "./contacts";
 
 class SidePanel extends Component {
-  state = {};
   render() {
     return (
       <React.Fragment>
         <div id="sidepanel">
-          Sidepanel
-          <Profile />
+          <Profile user={this.props.user} />
           <Search />
-          <Contacts />
+          <Contacts
+            users={this.props.users}
+            handleClick={this.props.handleClick}
+          />
         </div>
       </React.Fragment>
     );

@@ -1,3 +1,9 @@
+.errorPanel {
+  color: red;
+  text-align: center;
+  font-style: italic;
+}
+
 #chatbox {
   /*width: 95%;*/
   min-width: 360px;
@@ -223,12 +229,13 @@ ul {
 }
 
 #chatbox .content .messages ul li.sent img {
-  margin: 6px 8px 0 0;
+  float: right;
+  margin: 6px 0 0 8px;
 }
 
 #chatbox .content .messages ul li.sent p {
-  background: #435f7a;
-  color: #f5f5f5;
+  background: #f5f5f5;
+  float: right;
 }
 
 @media screen and (min-width: 735px) {
@@ -246,13 +253,12 @@ ul {
 }
 
 #chatbox .content .messages ul li.replies img {
-  float: right;
-  margin: 6px 0 0 8px;
+  margin: 6px 8px 0 0;
 }
 
 #chatbox .content .messages ul li.replies p {
-  background: #f5f5f5;
-  float: right;
+  background: #435f7a;
+  color: #f5f5f5;
 }
 
 @media screen and (min-width: 735px) {

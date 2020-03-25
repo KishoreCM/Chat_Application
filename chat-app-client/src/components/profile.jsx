@@ -12,7 +12,7 @@ class Profile extends Component {
             className="online"
             alt=""
           />
-          <p>Kishore</p>
+          <p>{this.props.user}</p>
         </div>
       </div>
     );

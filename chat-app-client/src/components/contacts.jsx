@@ -1,26 +1,30 @@
 import React, { Component } from "react";
+import ContactList from "./contactlist";
+import auth from "../auth";
 
 class Contacts extends Component {
-  state = {};
+  displayContacts = () => {
+    let contactList = [];
+    this.props.users.map((user, index) => {
+      if (user.phone !== auth.getCurrentUser())
+        contactList.push(
+          <ContactList
+            key={index}
+            id={index}
+            user={user}
+            handleClick={this.props.handleClick}
+          />
+        );
+    });
+    return contactList;
+  };
+
   render() {
     return (
       <div id="contacts">
         <ul>
-          <li className="contact">
-            <div className="wrap">
-              <span className="contact-status online"></span>
-              <img src="http://emilcarlsson.se/assets/louislitt.png" alt="" />
-              <div className="meta">
-                <p className="name">Louis Litt</p>
-                <p className="preview">
-                  You just got LITT up, Mike.You just got LITT up, Mike.You just
-                  got LITT up, Mike.You just got LITT up, Mike.You just got LITT
-                  up, Mike.You just got LITT up, Mike.
-                </p>
-              </div>
-            </div>
-          </li>
-          <li className="contact active">
+          {this.displayContacts()}
+          {/*<li className="contact active">
             <div className="wrap">
               <span className="contact-status away"></span>
               <img
@@ -36,122 +40,7 @@ class Contacts extends Component {
                 </p>
               </div>
             </div>
-          </li>
-          <li className="contact">
-            <div className="wrap">
-              <span className="contact-status online"></span>
-              <img
-                src="http://emilcarlsson.se/assets/donnapaulsen.png"
-                alt=""
-              />
-              <div className="meta">
-                <p className="name">Louis Litt</p>
-                <p className="preview">
-                  You just got LITT up, Mike.You just got LITT up, Mike.You just
-                  got LITT up, Mike.You just got LITT up, Mike.You just got LITT
-                  up, Mike.You just got LITT up, Mike.
-                </p>
-              </div>
-            </div>
-          </li>
-          <li className="contact">
-            <div className="wrap">
-              <span className="contact-status away"></span>
-              <img src="http://emilcarlsson.se/assets/louislitt.png" alt="" />
-              <div className="meta">
-                <p className="name">Louis Litt</p>
-                <p className="preview">
-                  You just got LITT up, Mike.You just got LITT up, Mike.You just
-                  got LITT up, Mike.You just got LITT up, Mike.You just got LITT
-                  up, Mike.You just got LITT up, Mike.
-                </p>
-              </div>
-            </div>
-          </li>
-          <li className="contact">
-            <div className="wrap">
-              <span className="contact-status online"></span>
-              <img src="http://emilcarlsson.se/assets/louislitt.png" alt="" />
-              <div className="meta">
-                <p className="name">Louis Litt</p>
-                <p className="preview">
-                  You just got LITT up, Mike.You just got LITT up, Mike.You just
-                  got LITT up, Mike.You just got LITT up, Mike.You just got LITT
-                  up, Mike.You just got LITT up, Mike.
-                </p>
-              </div>
-            </div>
-          </li>
-          <li className="contact">
-            <div className="wrap">
-              <span className="contact-status away"></span>
-              <img src="http://emilcarlsson.se/assets/louislitt.png" alt="" />
-              <div className="meta">
-                <p className="name">Louis Litt</p>
-                <p className="preview">
-                  You just got LITT up, Mike.You just got LITT up, Mike.You just
-                  got LITT up, Mike.You just got LITT up, Mike.You just got LITT
-                  up, Mike.You just got LITT up, Mike.
-                </p>
-              </div>
-            </div>
-          </li>
-          <li className="contact">
-            <div className="wrap">
-              <span className="contact-status online"></span>
-              <img src="http://emilcarlsson.se/assets/louislitt.png" alt="" />
-              <div className="meta">
-                <p className="name">Louis Litt</p>
-                <p className="preview">
-                  You just got LITT up, Mike.You just got LITT up, Mike.You just
-                  got LITT up, Mike.You just got LITT up, Mike.You just got LITT
-                  up, Mike.You just got LITT up, Mike.
-                </p>
-              </div>
-            </div>
-          </li>
-          <li className="contact">
-            <div className="wrap">
-              <span className="contact-status online"></span>
-              <img src="http://emilcarlsson.se/assets/louislitt.png" alt="" />
-              <div className="meta">
-                <p className="name">Louis Litt</p>
-                <p className="preview">
-                  You just got LITT up, Mike.You just got LITT up, Mike.You just
-                  got LITT up, Mike.You just got LITT up, Mike.You just got LITT
-                  up, Mike.You just got LITT up, Mike.
-                </p>
-              </div>
-            </div>
-          </li>
-          <li className="contact">
-            <div className="wrap">
-              <span className="contact-status online"></span>
-              <img src="http://emilcarlsson.se/assets/louislitt.png" alt="" />
-              <div className="meta">
-                <p className="name">Louis Litt</p>
-                <p className="preview">
-                  You just got LITT up, Mike.You just got LITT up, Mike.You just
-                  got LITT up, Mike.You just got LITT up, Mike.You just got LITT
-                  up, Mike.You just got LITT up, Mike.
-                </p>
-              </div>
-            </div>
-          </li>
-          <li className="contact">
-            <div className="wrap">
-              <span className="contact-status online"></span>
-              <img src="http://emilcarlsson.se/assets/louislitt.png" alt="" />
-              <div className="meta">
-                <p className="name">Louis Litt</p>
-                <p className="preview">
-                  You just got LITT up, Mike.You just got LITT up, Mike.You just
-                  got LITT up, Mike.You just got LITT up, Mike.You just got LITT
-                  up, Mike.You just got LITT up, Mike.
-                </p>
-              </div>
-            </div>
-          </li>
+    </li>*/}
         </ul>
       </div>
     );

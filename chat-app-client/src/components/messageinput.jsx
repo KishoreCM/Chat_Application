@@ -21,7 +21,14 @@ class MessageInput extends Component {
             onChange={this.setMessage}
           />
           <i className="fa fa-paperclip attachment" aria-hidden="true"></i>
-          <button className="submit">
+          <button
+            className="submit"
+            type="submit"
+            onClick={e => {
+              e.preventDefault();
+              this.props.sendMessage(this.state.message);
+            }}
+          >
             <i className="fa fa-paper-plane" aria-hidden="true"></i>
           </button>
         </div>

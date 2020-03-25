@@ -4,14 +4,19 @@ import Messages from "./messages";
 import MessageInput from "./messageinput";
 
 class Content extends Component {
-  state = {};
   render() {
     return (
       <React.Fragment>
         <div className="content">
-          <ContactProfile />
-          <Messages />
-          <MessageInput />
+          <ContactProfile
+            userName={this.props.user}
+            contactUserName={this.props.contactUserName}
+          />
+          <Messages
+            userName={this.props.userName}
+            messages={this.props.messages}
+          />
+          <MessageInput sendMessage={this.props.sendMessage} />
         </div>
       </React.Fragment>
     );
