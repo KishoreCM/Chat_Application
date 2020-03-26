@@ -6,15 +6,14 @@ class Contacts extends Component {
   displayContacts = () => {
     let contactList = [];
     this.props.users.map((user, index) => {
-      if (user.phone !== auth.getCurrentUser())
-        contactList.push(
-          <ContactList
-            key={index}
-            id={index}
-            user={user}
-            handleClick={this.props.handleClick}
-          />
-        );
+      contactList.push(
+        <ContactList
+          key={index}
+          id={index}
+          user={user}
+          handleClick={this.props.handleClick}
+        />
+      );
     });
     return contactList;
   };

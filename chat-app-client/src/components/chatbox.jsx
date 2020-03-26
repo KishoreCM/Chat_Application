@@ -55,9 +55,14 @@ class ChatBox extends Component {
           user => user.phone === auth.getCurrentUser()
         ).name;
 
+        let filteredUsers = response.data.splice(0, response.data.length - 2);
+        filteredUsers = filteredUsers.filter(
+          user => user.phone !== auth.getCurrentUser()
+        );
+
         this.setState(
           {
-            users: response.data.splice(0, response.data.length - 2),
+            users: filteredUsers,
             pChat: response.data[response.data.length - 2],
             gChat: response.data[response.data.length - 1],
             userName: currentUserName
@@ -88,6 +93,7 @@ class ChatBox extends Component {
                 messages.push(message);
                 this.setState({ pMessages: messages });
               });
+              this.displayContact(this.state.users[0]);
             });
           }
         );
@@ -116,6 +122,7 @@ class ChatBox extends Component {
   };
 
   displayContact = user => {
+    console.log("display contact: ", user);
     this.setState({ contactUserName: user.name, contactUserPhone: user.phone });
   };
 

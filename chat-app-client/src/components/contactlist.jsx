@@ -2,12 +2,15 @@ import React, { Component } from "react";
 
 class ContactList extends Component {
   setActiveFlag = false;
+
   componentDidUpdate() {
     this.setActiveFlag = false;
   }
+
   setActive = () => {
     return this.setActiveFlag ? "contact active" : "contact";
   };
+
   render() {
     return (
       <li
