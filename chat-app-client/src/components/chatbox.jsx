@@ -114,11 +114,27 @@ class ChatBox extends Component {
     let msg = { from: this.state.userName, text: message };
     messages.push(msg);
     this.setState({ pMessages: messages });
-    this.socket.emit("sendMessage", {
-      userName: this.state.userName,
-      text: message,
-      to: this.state.contactUserPhone
-    });
+
+    let userChat = new FormData();
+    userChat.append("userPh", auth.getCurrentUser());
+    userChat.append("friendPh", this.state.contactUserPhone);
+    userChat.append("sentMsg", message);
+
+    axios({
+      method: "post",
+      url: "app/add/chats",
+      data: userChat,
+      headers: { "Content-Type": "multipart/form-data" }
+    })
+      .then(response => {
+        console.log(response.data);
+        this.socket.emit("sendMessage", {
+          userName: this.state.userName,
+          text: message,
+          to: this.state.contactUserPhone
+        });
+      })
+      .catch(error => console.log(error));
   };
 
   displayContact = user => {
