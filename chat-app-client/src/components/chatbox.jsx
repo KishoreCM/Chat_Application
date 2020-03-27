@@ -122,14 +122,14 @@ class ChatBox extends Component {
 
     axios({
       method: "post",
-      url: "app/add/chats",
+      url: "app/chats/sent",
       data: userChat,
       headers: { "Content-Type": "multipart/form-data" }
     })
       .then(response => {
         console.log(response.data);
         this.socket.emit("sendMessage", {
-          userName: this.state.userName,
+          from: this.state.userPh,
           text: message,
           to: this.state.contactUserPhone
         });

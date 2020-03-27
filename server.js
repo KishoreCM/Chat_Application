@@ -6,7 +6,8 @@ const formidable = require("express-formidable");
 const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
-
+const axios = require("axios");
+const FormData = require("form-data");
 //const { addUser, removeUser, getUser, getUsersInRoom } = require("./users");
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -53,8 +54,21 @@ io.on("connection", socket => {
 
   socket.on("sendMessage", message => {
     console.log(message);
+    let userChat = new FormData();
+    userChat.append("friendPh", message.from);
+    userChat.append("userPh", message.to);
+    userChat.append("text", message.text);
+    /*axios({
+      method: "post",
+      url: "http://localhost:5000/app/chats/received",
+      data: userChat,
+      //headers: { "Content-Type": "multipart/form-data" }
+      headers: userChat.getHeaders()
+    })
+      .then(response => console.log("Server axios: ", response.data))
+      .catch(error => console.log("Server axios: ", error));*/
     io.to(message.to).emit("message", {
-      from: message.userName,
+      from: message.userPh,
       text: message.text
     });
   });
