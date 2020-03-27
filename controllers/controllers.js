@@ -84,7 +84,7 @@ const getUserChats = (req, res) => {
   });
 };
 
-const addSentChats = async (req, res) => {
+const addChats = async (req, res) => {
   try {
     let userId = await pool.query(`SELECT id FROM users WHERE phone=$1`, [
       req.fields.userPh
@@ -142,79 +142,9 @@ const addSentChats = async (req, res) => {
   }
 };
 
-/*
-const addSentChats = async (req, res) => {
-  try {
-    let userId;
-    let chatId;
-    let isFriendChatExist;
-
-    userId = await pool.query(`SELECT id FROM users WHERE phone=$1`, [
-      req.fields.userPh
-    ]);
-
-    isFriendChatExist = await pool.query(
-      `SELECT friend_name, user_id FROM private_chats WHERE friend_name = $1 AND user_id=$2`,
-      [req.fields.friendPh, userId.rows[0].id]
-    );
-
-    if (!isFriendChatExist.rows[0]) {
-      await pool.query(
-        `INSERT INTO private_chats(friend_name, user_id, created_at) VALUES ($1, $2, NOW())`,
-        [req.fields.friendPh, userId.rows[0].id]
-      );
-    }
-    chatId = await pool.query(
-      `SELECT id FROM private_chats WHERE user_id=$1 and friend_name=$2`,
-      [userId.rows[0].id, req.fields.friendPh]
-    );
-    await pool.query(
-      `INSERT INTO private_msgs(user_id, chat_id, sent_msgs, sent_at) VALUES ($1, $2, $3, NOW())`,
-      [userId.rows[0].id, chatId.rows[0].id, req.fields.sentMsg]
-    );
-    res.status(200).send("Message Sent!");
-  } catch (error) {
-    console.log(error);
-    res.status(500).send(error);
-  }
-
-  //res.status(200).send("Ok");
-};
-*/
-
-/*
-const addReceivedChats = async (req, res) => {
-  try {
-    let friendId = await pool.query(`SELECT id FROM users WHERE phone=$1`, [
-      req.fields.friendPh
-    ]);
-
-    let chatId = await pool.query(
-      `SELECT id FROM private_chats WHERE friend_name=$1 AND user_id=$2`,
-      [req.fields.userPh, friendId.rows[0].id]
-    );
-
-    let userId = await pool.query(`SELECT id FROM users WHERE phone=$1`, [
-      req.fields.userPh
-    ]);
-
-    await pool.query(
-      `INSERT INTO private_msgs(user_id, chat_id, received_msgs, received_at) VALUES ($1, $2, $3, NOW())`,
-      [userId.rows[0].id, chatId.rows[0].id, req.fields.text]
-    );
-
-    res.status(200).send("Message Received!");
-  } catch (error) {
-    console.log(error);
-    res.status(500).send(error);
-  }
-};
-*/
-
 module.exports = {
   addUsers,
   getUsers,
   getUserChats,
-  addSentChats
-  //addReceivedChats
+  addChats
 };

@@ -122,7 +122,7 @@ class ChatBox extends Component {
 
     axios({
       method: "post",
-      url: "app/chats/sent",
+      url: "app/add/chats",
       data: userChat,
       headers: { "Content-Type": "multipart/form-data" }
     })
