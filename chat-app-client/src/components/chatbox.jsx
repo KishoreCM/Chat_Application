@@ -63,7 +63,7 @@ class ChatBox extends Component {
         this.setState(
           {
             users: filteredUsers,
-            pChat: response.data[response.data.length - 2],
+            //pChat: response.data[response.data.length - 2],
             gChat: response.data[response.data.length - 1],
             userName: currentUserName
           },
@@ -101,6 +101,10 @@ class ChatBox extends Component {
       .catch(error => console.log(error));
   }
 
+  componentDidUpdate() {
+    console.log("Chatbox Updated!");
+  }
+
   componentWillUnmount() {
     this.socket.emit("disconnect", { userPh: auth.getCurrentUser() });
     this.socket.off();
@@ -111,35 +115,57 @@ class ChatBox extends Component {
 
   sendMessage = message => {
     let messages = this.state.pMessages;
-    let msg = { from: this.state.userName, text: message };
-    messages.push(msg);
-    this.setState({ pMessages: messages });
+    if (message !== "") {
+      let msg = { from: this.state.userPh, text: message };
+      messages.push(msg);
+      this.setState({ pMessages: messages });
 
-    let userChat = new FormData();
-    userChat.append("userPh", auth.getCurrentUser());
-    userChat.append("friendPh", this.state.contactUserPhone);
-    userChat.append("sentMsg", message);
+      let userChat = new FormData();
+      userChat.append("userPh", auth.getCurrentUser());
+      userChat.append("friendPh", this.state.contactUserPhone);
+      userChat.append("sentMsg", message);
 
-    axios({
-      method: "post",
-      url: "app/add/chats",
-      data: userChat,
-      headers: { "Content-Type": "multipart/form-data" }
-    })
-      .then(response => {
-        console.log(response.data);
-        this.socket.emit("sendMessage", {
-          from: this.state.userPh,
-          text: message,
-          to: this.state.contactUserPhone
-        });
+      axios({
+        method: "post",
+        url: "app/add/chats",
+        data: userChat,
+        headers: { "Content-Type": "multipart/form-data" }
       })
-      .catch(error => console.log(error));
+        .then(response => {
+          console.log(response.data);
+          this.socket.emit("sendMessage", {
+            from: this.state.userPh,
+            text: message,
+            to: this.state.contactUserPhone
+          });
+        })
+        .catch(error => console.log(error));
+    }
   };
 
   displayContact = user => {
     console.log("display contact: ", user);
     this.setState({ contactUserName: user.name, contactUserPhone: user.phone });
+
+    let chat = new FormData();
+    chat.append("userPh", auth.getCurrentUser());
+    chat.append("friendId", user.id);
+    axios({
+      method: "post",
+      url: "app/get/chats",
+      data: chat,
+      headers: { "Content-Type": "multipart/form-data" }
+    })
+      .then(response => {
+        console.log("chatMsgs: ", response.data);
+        response.data === "You haven't made any conversation yet"
+          ? this.setState({
+              pChat: ["You haven't made any conversation yet"],
+              pMessages: []
+            })
+          : this.setState({ pChat: response.data.rows, pMessages: [] });
+      })
+      .catch(error => console.log(error));
   };
 
   render() {
@@ -156,6 +182,9 @@ class ChatBox extends Component {
             contactUserName={this.state.contactUserName}
             messages={this.state.pMessages}
             sendMessage={this.sendMessage}
+            fetchedMsgs={this.state.pChat}
+            contactUserPhone={this.state.contactUserPhone}
+            userPh={this.state.userPh}
           />
         </div>
       </div>

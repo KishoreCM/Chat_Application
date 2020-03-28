@@ -12,7 +12,13 @@ class Content extends Component {
             userName={this.props.user}
             contactUserName={this.props.contactUserName}
           />
-          <Messages userName={this.props.user} messages={this.props.messages} />
+          <Messages
+            userName={this.props.user}
+            messages={this.props.messages}
+            fetchedMsgs={this.props.fetchedMsgs}
+            contactUserPhone={this.props.contactUserPhone}
+            userPh={this.props.userPh}
+          />
           <MessageInput sendMessage={this.props.sendMessage} />
         </div>
       </React.Fragment>

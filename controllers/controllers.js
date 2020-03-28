@@ -142,9 +142,41 @@ const addChats = async (req, res) => {
   }
 };
 
+const getChats = async (req, res) => {
+  try {
+    let userId = await pool.query(`SELECT id FROM users WHERE phone=$1`, [
+      req.fields.userPh
+    ]);
+
+    let friendPh = await pool.query(`SELECT phone FROM users WHERE id=$1`, [
+      req.fields.friendId
+    ]);
+
+    let chatId = await pool.query(
+      `SELECT id FROM private_chats WHERE user_id=$1 AND friend_name=$2`,
+      [userId.rows[0].id, friendPh.rows[0].phone]
+    );
+
+    if (!chatId.rows[0]) {
+      return res.status(200).send("You haven't made any conversation yet");
+    }
+
+    let chatMsgs = await pool.query(
+      `SELECT * FROM private_msgs WHERE chat_id=$1 ORDER BY id ASC`,
+      [chatId.rows[0].id]
+    );
+
+    res.status(200).send(chatMsgs);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  }
+};
+
 module.exports = {
   addUsers,
   getUsers,
   getUserChats,
-  addChats
+  addChats,
+  getChats
 };

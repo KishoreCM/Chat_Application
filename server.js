@@ -68,7 +68,7 @@ io.on("connection", socket => {
       .then(response => console.log("Server axios: ", response.data))
       .catch(error => console.log("Server axios: ", error));*/
     io.to(message.to).emit("message", {
-      from: message.userPh,
+      from: message.from,
       text: message.text
     });
   });
