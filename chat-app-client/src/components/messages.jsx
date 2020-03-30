@@ -106,11 +106,19 @@ class Messages extends Component {
       ) {
         if (msg.from === this.props.userPh) {
           msgs.push(
-            <Sent key={index} messages={ReactEmoji.emojify(msg.text)} />
+            <Sent
+              key={index}
+              messages={ReactEmoji.emojify(msg.text)}
+              time={msg.time}
+            />
           );
         } else {
           msgs.push(
-            <Replies key={index} messages={ReactEmoji.emojify(msg.text)} />
+            <Replies
+              key={index}
+              messages={ReactEmoji.emojify(msg.text)}
+              time={msg.time}
+            />
           );
         }
       }

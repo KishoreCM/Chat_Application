@@ -116,7 +116,7 @@ class ChatBox extends Component {
   sendMessage = message => {
     let messages = this.state.pMessages;
     if (message !== "") {
-      let msg = { from: this.state.userPh, text: message };
+      let msg = { from: this.state.userPh, text: message, time: new Date() };
       messages.push(msg);
       this.setState({ pMessages: messages });
 
@@ -136,7 +136,8 @@ class ChatBox extends Component {
           this.socket.emit("sendMessage", {
             from: this.state.userPh,
             text: message,
-            to: this.state.contactUserPhone
+            to: this.state.contactUserPhone,
+            time: new Date()
           });
         })
         .catch(error => console.log(error));
