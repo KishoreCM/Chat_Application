@@ -445,3 +445,40 @@ form {
   box-shadow: rgba(255, 255, 255, 0) 0 1px 0,
     inset rgba(255, 255, 255, 0.7) 0 1px 0;
 }
+
+.hr-text {
+  line-height: 1em;
+  position: relative;
+  outline: 0;
+  border: 0;
+  color: black;
+  text-align: center;
+  height: 1.5em;
+}
+.hr-text:before {
+  content: "";
+  background: linear-gradient(to right, transparent, #03888c, transparent);
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 100%;
+  height: 5px;
+}
+.hr-text:after {
+  content: attr(data-content);
+  position: relative;
+  display: inline-block;
+  color: black;
+  padding: 0 0.5em;
+  line-height: 1.5em;
+  color: #515054;
+  font-size: 20px;
+  font-weight: 900;
+  background-color: #fcfcfa;
+  font-style: italic;
+  border-radius: 25px;
+}
+
+.display_date {
+  display: block;
+}
