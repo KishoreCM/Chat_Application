@@ -11,6 +11,9 @@ class Content extends Component {
           <ContactProfile
             userName={this.props.user}
             contactUserName={this.props.contactUserName}
+            typingUser={this.props.typingUser}
+            contactUserPhone={this.props.contactUserPhone}
+            indicateTyping={this.props.indicateTyping}
           />
           <Messages
             userName={this.props.user}
@@ -19,7 +22,10 @@ class Content extends Component {
             contactUserPhone={this.props.contactUserPhone}
             userPh={this.props.userPh}
           />
-          <MessageInput sendMessage={this.props.sendMessage} />
+          <MessageInput
+            sendMessage={this.props.sendMessage}
+            typingIndicator={this.props.typingIndicator}
+          />
         </div>
       </React.Fragment>
     );

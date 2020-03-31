@@ -23,6 +23,8 @@ class MessageInput extends Component {
               if (event.key === "Enter") {
                 this.setState({ message: "" });
                 this.props.sendMessage(this.state.message);
+              } else {
+                this.props.typingIndicator();
               }
             }}
           />

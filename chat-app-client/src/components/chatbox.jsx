@@ -20,7 +20,9 @@ class ChatBox extends Component {
       gMessages: [],
       users: [],
       contactUserName: "",
-      contactUserPhone: ""
+      contactUserPhone: "",
+      typingUser: "",
+      indicateTyping: ""
     };
   }
 
@@ -87,6 +89,20 @@ class ChatBox extends Component {
               });
               //console.log(this.socket);
 
+              this.socket.on("typingIndicator", message => {
+                console.log(message.from, "is typing...");
+                this.setState({
+                  typingUser: message.from,
+                  indicateTyping: "typing..."
+                });
+                setTimeout(() => {
+                  this.setState({
+                    typingUser: "",
+                    indicateTyping: ""
+                  });
+                }, 1000);
+              });
+
               this.socket.on("message", message => {
                 console.log("message: ", message);
                 let messages = this.state.pMessages;
@@ -110,6 +126,13 @@ class ChatBox extends Component {
     this.socket.off();
     console.log("Unmounted");
   }
+
+  typingIndicator = () => {
+    this.socket.emit("typing", {
+      from: this.state.userPh,
+      to: this.state.contactUserPhone
+    });
+  };
 
   // function for sending messages
 
@@ -186,6 +209,9 @@ class ChatBox extends Component {
             fetchedMsgs={this.state.pChat}
             contactUserPhone={this.state.contactUserPhone}
             userPh={this.state.userPh}
+            indicateTyping={this.indicateTyping}
+            typingUser={this.state.typingUser}
+            typingIndicator={this.typingIndicator}
           />
         </div>
       </div>
